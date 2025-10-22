@@ -23,16 +23,16 @@ export default {
                 paragraph: "nunito sans"
             },
             colors: {
-                'light-cyan': '#B2F2FF',
-                'dark-grey': '#1E2129',
-                destructive: '#FF453A',
-                'destructive-foreground': '#FFFFFF',
-                background: '#0B0E13',
-                secondary: '#E7ECF2',
-                foreground: '#E7ECF2',
-                'secondary-foreground': '#0B0E13',
-                'primary-foreground': '#0B0E13',
-                primary: '#00E5FF'
+                primary: "#ff5c00",
+                "primary-foreground": "#0b0e13",
+                secondary: "#ffd54f",
+                "secondary-foreground": "#0B0E13",
+                background: "#0B0E13",
+                "light-cyan": "#B2F2FF",
+                "dark-grey": "#1E2129",
+                destructive: "#FF453A",
+                "destructive-foreground": "#FFFFFF",
+                foreground: "#E7ECF2"
             },
         },
     },
