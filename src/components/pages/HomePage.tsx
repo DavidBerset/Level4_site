@@ -88,7 +88,7 @@ export default function HomePage() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <h1 className="text-2xl font-heading font-bold text-primary">LEVEL4</h1>
+              <h1 className="text-2xl font-heading font-bold text-primary">{"LEVEL"}</h1>
             </div>
 
             {/* Desktop Navigation */}
@@ -176,7 +176,6 @@ export default function HomePage() {
           )}
         </div>
       </header>
-
       {/* Hero Section */}
       <section id="accueil" className="h-screen grid place-items-center relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-dark-grey to-background"></div>
@@ -239,7 +238,6 @@ export default function HomePage() {
           <ChevronDown className="w-8 h-8 text-primary animate-bounce" />
         </motion.div>
       </section>
-
       {/* Services Section */}
       <section id="services" className="py-24 bg-dark-grey/50">
         <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -290,7 +288,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Packs Section */}
       <section id="packs" className="py-24">
         <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -348,7 +345,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Réalisations Section */}
       <section id="realisations" className="py-24 bg-dark-grey/50">
         <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -401,7 +397,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Matériel Section */}
       <section id="materiel" className="py-24">
         <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -459,7 +454,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* À propos Section */}
       <section id="apropos" className="py-24 bg-dark-grey/50">
         <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -509,7 +503,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Avis Section */}
       <section className="py-24">
         <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -554,7 +547,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Contact Section */}
       <section id="contact" className="py-24 bg-dark-grey/50">
         <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -775,7 +767,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Footer */}
       <footer className="bg-background border-t border-dark-grey py-12">
         <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
