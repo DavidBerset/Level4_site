@@ -88,7 +88,7 @@ export default function HomePage() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <h1 className="text-2xl font-heading font-bold text-primary">{"LEVEL"}</h1>
+              <h1 className="text-2xl font-heading font-bold text-primary">{"LEVEL4 Sound & Light"}</h1>
             </div>
 
             {/* Desktop Navigation */}
