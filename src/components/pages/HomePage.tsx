@@ -45,7 +45,9 @@ export default function HomePage() {
 
         setServices(servicesData.items);
         setPacks(packsData.items);
-        setRealisations(realisationsData.items);
+        // Trier les réalisations par ordre croissant d'ID
+        const sortedRealisations = realisationsData.items.sort((a, b) => a._id.localeCompare(b._id));
+        setRealisations(sortedRealisations);
         setMateriel(materielData.items);
         setAvis(avisData.items);
       } catch (error) {
