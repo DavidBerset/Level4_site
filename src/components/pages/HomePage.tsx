@@ -45,11 +45,11 @@ export default function HomePage() {
 
         setServices(servicesData.items);
         setPacks(packsData.items);
-        // Trier les réalisations par jauge (nombre de personnes) croissante
+        // Trier les réalisations par jauge (nombre de personnes) décroissante
         const sortedRealisations = realisationsData.items.sort((a, b) => {
           const jaugeA = a.audienceSize || 0;
           const jaugeB = b.audienceSize || 0;
-          return jaugeA - jaugeB;
+          return jaugeB - jaugeA;
         });
         setRealisations(sortedRealisations);
         setMateriel(materielData.items);
