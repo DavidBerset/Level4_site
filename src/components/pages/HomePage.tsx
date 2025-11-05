@@ -45,8 +45,12 @@ export default function HomePage() {
 
         setServices(servicesData.items);
         setPacks(packsData.items);
-        // Trier les réalisations par ordre croissant d'ID
-        const sortedRealisations = realisationsData.items.sort((a, b) => a._id.localeCompare(b._id));
+        // Trier les réalisations par jauge (nombre de personnes) croissante
+        const sortedRealisations = realisationsData.items.sort((a, b) => {
+          const jaugeA = a.audienceSize || 0;
+          const jaugeB = b.audienceSize || 0;
+          return jaugeA - jaugeB;
+        });
         setRealisations(sortedRealisations);
         setMateriel(materielData.items);
         setAvis(avisData.items);
