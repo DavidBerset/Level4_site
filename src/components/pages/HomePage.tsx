@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Image } from '@/components/ui/image';
 import { BaseCrudService } from '@/integrations';
 import { Services, Ralisations, Matriellalocation } from '@/entities';
-import { wixEmailV1 } from '@wix/email';
 import { 
   Volume2, 
   Lightbulb, 
