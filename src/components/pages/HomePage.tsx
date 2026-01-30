@@ -466,12 +466,8 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="mt-16 bg-background/50 border border-dark-grey rounded-lg p-8 text-center"
           >
-            <h3 className="text-2xl font-heading font-semibold text-white mb-4">
-              Éclairage
-            </h3>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Pour les solutions d'éclairage, nous collaborons avec d'autres entreprises spécialisées afin de vous proposer les meilleures technologies et services adaptés à vos besoins.
-            </p>
+            <h3 className="text-2xl font-heading font-semibold text-white mb-4">Éclairage</h3>
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto">Pour les solutions d'éclairage, nous collaborons avec d'autres entreprises spécialisées afin de vous proposer les meilleures technologies et services adaptés à vos besoins.</p>
             <Button 
               onClick={() => scrollToSection('contact')}
               className="mt-6 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-8 py-3 rounded-lg"
