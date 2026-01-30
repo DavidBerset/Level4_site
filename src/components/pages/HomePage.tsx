@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Image } from '@/components/ui/image';
 import { BaseCrudService } from '@/integrations';
 import { Services, Ralisations, Matriellalocation } from '@/entities';
+import { wixEmailV1 } from '@wix/email';
 import { 
   Volume2, 
   Lightbulb, 
@@ -86,43 +87,53 @@ export default function HomePage() {
         rating: 0
       });
 
-      // Send email notification to info@level4.ch
-      const emailResponse = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          to: 'info@level4.ch',
-          subject: `Nouvelle demande de devis - ${formData.eventType}`,
-          html: `
-            <h2>Nouvelle demande de devis</h2>
-            <p><strong>Email:</strong> ${formData.email}</p>
-            <p><strong>Téléphone:</strong> ${formData.phone}</p>
-            <p><strong>Type d'événement:</strong> ${formData.eventType}</p>
-            <p><strong>Date:</strong> ${formData.date}</p>
-            <p><strong>Lieu:</strong> ${formData.location}</p>
-            <p><strong>Jauge:</strong> ${formData.audience} personnes</p>
-            <p><strong>Budget:</strong> ${formData.budget}</p>
-            <p><strong>Message:</strong> ${formData.message}</p>
-          `
-        })
+      // Send email notification to info@level4.ch using Wix Email API
+      const emailBody = `
+        <h2>Nouvelle demande de devis</h2>
+        <p><strong>Email:</strong> ${formData.email}</p>
+        <p><strong>Téléphone:</strong> ${formData.phone}</p>
+        <p><strong>Type d'événement:</strong> ${formData.eventType}</p>
+        <p><strong>Date:</strong> ${formData.date}</p>
+        <p><strong>Lieu:</strong> ${formData.location}</p>
+        <p><strong>Jauge:</strong> ${formData.audience} personnes</p>
+        <p><strong>Budget:</strong> ${formData.budget}</p>
+        <p><strong>Message:</strong> ${formData.message || 'N/A'}</p>
+      `;
+
+      // Send email to admin
+      await wixEmailV1.email.send({
+        to: 'info@level4.ch',
+        subject: `Nouvelle demande de devis - ${formData.eventType}`,
+        html: emailBody,
       });
 
-      if (emailResponse.ok || true) { // Show success even if email fails, contact was saved
-        setFormSubmitted(true);
-        setFormData({
-          eventType: '',
-          date: '',
-          location: '',
-          audience: '',
-          budget: '',
-          phone: '',
-          email: '',
-          message: ''
-        });
-        setTimeout(() => setFormSubmitted(false), 5000);
-      }
+      // Send confirmation email to user
+      const confirmationBody = `
+        <h2>Merci pour votre demande de devis</h2>
+        <p>Bonjour,</p>
+        <p>Nous avons bien reçu votre demande de devis pour un événement de type <strong>${formData.eventType}</strong>.</p>
+        <p>Notre équipe vous répondra dans la journée.</p>
+        <p>Cordialement,<br/>L'équipe LEVEL4</p>
+      `;
+
+      await wixEmailV1.email.send({
+        to: formData.email,
+        subject: 'Confirmation de votre demande de devis - LEVEL4',
+        html: confirmationBody,
+      });
+
+      setFormSubmitted(true);
+      setFormData({
+        eventType: '',
+        date: '',
+        location: '',
+        audience: '',
+        budget: '',
+        phone: '',
+        email: '',
+        message: ''
+      });
+      setTimeout(() => setFormSubmitted(false), 5000);
     } catch (error) {
       console.error('Error submitting form:', error);
       // Still show success message as contact was saved
@@ -252,7 +263,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section id="accueil" className="h-screen grid place-items-center relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-dark-grey to-background"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,229,255,0.1),transparent_70%))]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,229,255,0.1),transparent_70%))"></div>
         
         <div className="relative z-10 text-center max-w-6xl mx-auto px-4">
           <div className="mb-8">
