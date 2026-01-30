@@ -29,18 +29,6 @@ export default function HomePage() {
   const [materiel, setMateriel] = useState<Matriellalocation[]>([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [formError, setFormError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    eventType: '',
-    date: '',
-    location: '',
-    audience: '',
-    budget: '',
-    phone: '',
-    email: '',
-    message: ''
-  });
 
   useEffect(() => {
     const loadData = async () => {
@@ -74,91 +62,10 @@ export default function HomePage() {
     loadData();
   }, []);
 
-  const handleFormSubmit = async (e: React.FormEvent) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setFormError('');
-    setIsSubmitting(true);
-    
-    try {
-      // Create a contact in the CMS
-      const contactId = crypto.randomUUID();
-      await BaseCrudService.create('avisclients', {
-        _id: contactId,
-        firstName: formData.email.split('@')[0],
-        eventType: formData.eventType,
-        reviewText: `Date: ${formData.date}\nLieu: ${formData.location}\nJauge: ${formData.audience}\nBudget: ${formData.budget}\nTéléphone: ${formData.phone}\nEmail: ${formData.email}\nMessage: ${formData.message}`,
-        rating: 0
-      });
-
-      // Send emails using Wix backend
-      try {
-        // Send email to admin
-        const adminEmailResponse = await fetch('/api/send-email', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            to: 'info@level4.ch',
-            subject: `Nouvelle demande de devis - ${formData.eventType}`,
-            type: 'admin',
-            formData: {
-              email: formData.email,
-              phone: formData.phone,
-              eventType: formData.eventType,
-              date: formData.date,
-              location: formData.location,
-              audience: formData.audience,
-              budget: formData.budget,
-              message: formData.message
-            }
-          })
-        });
-
-        if (!adminEmailResponse.ok) {
-          console.error('Failed to send admin email:', adminEmailResponse.statusText);
-        }
-
-        // Send confirmation email to user
-        const userEmailResponse = await fetch('/api/send-email', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            to: formData.email,
-            subject: 'Confirmation de votre demande de devis - LEVEL4',
-            type: 'confirmation',
-            userName: formData.email.split('@')[0],
-            eventType: formData.eventType
-          })
-        });
-
-        if (!userEmailResponse.ok) {
-          console.error('Failed to send confirmation email:', userEmailResponse.statusText);
-        }
-      } catch (emailError) {
-        console.error('Error sending emails:', emailError);
-        // Don't fail the form submission if emails fail - the contact was still saved
-      }
-
-      setFormSubmitted(true);
-      setFormData({
-        eventType: '',
-        date: '',
-        location: '',
-        audience: '',
-        budget: '',
-        phone: '',
-        email: '',
-        message: ''
-      });
-      setTimeout(() => setFormSubmitted(false), 5000);
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      setFormError('Une erreur est survenue. Veuillez réessayer.');
-      setIsSubmitting(false);
-    }
+    setFormSubmitted(true);
+    setTimeout(() => setFormSubmitted(false), 5000);
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -630,17 +537,12 @@ export default function HomePage() {
                     </div>
                   ) : (
                     <form onSubmit={handleFormSubmit} className="space-y-6">
-                      {formError && (
-                        <div className="p-4 bg-destructive/10 border border-destructive rounded-lg">
-                          <p className="text-destructive text-sm">{formError}</p>
-                        </div>
-                      )}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <label className="block text-sm font-medium text-gray-300 mb-2">
                             Type d'événement
                           </label>
-                          <Select value={formData.eventType} onValueChange={(value) => setFormData({...formData, eventType: value})}>
+                          <Select>
                             <SelectTrigger className="bg-background border-dark-grey text-white">
                               <SelectValue placeholder="Sélectionnez..." />
                             </SelectTrigger>
@@ -661,8 +563,6 @@ export default function HomePage() {
                           <Input 
                             type="date" 
                             className="bg-background border-dark-grey text-white"
-                            value={formData.date}
-                            onChange={(e) => setFormData({...formData, date: e.target.value})}
                             required
                           />
                         </div>
@@ -676,8 +576,6 @@ export default function HomePage() {
                           <Input 
                             placeholder="Ville, canton"
                             className="bg-background border-dark-grey text-white"
-                            value={formData.location}
-                            onChange={(e) => setFormData({...formData, location: e.target.value})}
                             required
                           />
                         </div>
@@ -689,8 +587,6 @@ export default function HomePage() {
                             type="number"
                             placeholder="ex: 150"
                             className="bg-background border-dark-grey text-white"
-                            value={formData.audience}
-                            onChange={(e) => setFormData({...formData, audience: e.target.value})}
                             required
                           />
                         </div>
@@ -701,7 +597,7 @@ export default function HomePage() {
                           <label className="block text-sm font-medium text-gray-300 mb-2">
                             Budget approximatif (CHF)
                           </label>
-                          <Select value={formData.budget} onValueChange={(value) => setFormData({...formData, budget: value})}>
+                          <Select>
                             <SelectTrigger className="bg-background border-dark-grey text-white">
                               <SelectValue placeholder="Sélectionnez..." />
                             </SelectTrigger>
@@ -721,8 +617,6 @@ export default function HomePage() {
                             type="tel"
                             placeholder="+41 XX XXX XX XX"
                             className="bg-background border-dark-grey text-white"
-                            value={formData.phone}
-                            onChange={(e) => setFormData({...formData, phone: e.target.value})}
                             required
                           />
                         </div>
@@ -736,8 +630,6 @@ export default function HomePage() {
                           type="email"
                           placeholder="votre@email.com"
                           className="bg-background border-dark-grey text-white"
-                          value={formData.email}
-                          onChange={(e) => setFormData({...formData, email: e.target.value})}
                           required
                         />
                       </div>
@@ -749,17 +641,14 @@ export default function HomePage() {
                         <Textarea 
                           placeholder="Décrivez vos besoins spécifiques..."
                           className="bg-background border-dark-grey text-white min-h-[100px]"
-                          value={formData.message}
-                          onChange={(e) => setFormData({...formData, message: e.target.value})}
                         />
                       </div>
 
                       <Button 
                         type="submit"
-                        disabled={isSubmitting}
-                        className="bg-primary text-primary-foreground hover:bg-primary/90 w-full py-3 text-lg font-semibold disabled:opacity-50"
+                        className="bg-primary text-primary-foreground hover:bg-primary/90 w-full py-3 text-lg font-semibold"
                       >
-                        {isSubmitting ? 'Envoi en cours...' : 'Envoyer la demande'}
+                        Envoyer la demande
                       </Button>
                     </form>
                   )}
