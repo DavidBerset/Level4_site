@@ -29,6 +29,16 @@ export default function HomePage() {
   const [materiel, setMateriel] = useState<Matriellalocation[]>([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    eventType: '',
+    date: '',
+    location: '',
+    audience: '',
+    budget: '',
+    phone: '',
+    email: '',
+    message: ''
+  });
 
   useEffect(() => {
     const loadData = async () => {
@@ -62,10 +72,37 @@ export default function HomePage() {
     loadData();
   }, []);
 
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setFormSubmitted(true);
-    setTimeout(() => setFormSubmitted(false), 5000);
+    setTimeout(() => {
+      setFormSubmitted(false);
+      setFormData({
+        eventType: '',
+        date: '',
+        location: '',
+        audience: '',
+        budget: '',
+        phone: '',
+        email: '',
+        message: ''
+      });
+    }, 5000);
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -542,7 +579,7 @@ export default function HomePage() {
                           <label className="block text-sm font-medium text-gray-300 mb-2">
                             Type d'événement
                           </label>
-                          <Select>
+                          <Select value={formData.eventType} onValueChange={(value) => handleSelectChange('eventType', value)}>
                             <SelectTrigger className="bg-background border-dark-grey text-white">
                               <SelectValue placeholder="Sélectionnez..." />
                             </SelectTrigger>
@@ -562,6 +599,9 @@ export default function HomePage() {
                           </label>
                           <Input 
                             type="date" 
+                            name="date"
+                            value={formData.date}
+                            onChange={handleFormChange}
                             className="bg-background border-dark-grey text-white"
                             required
                           />
@@ -575,6 +615,9 @@ export default function HomePage() {
                           </label>
                           <Input 
                             placeholder="Ville, canton"
+                            name="location"
+                            value={formData.location}
+                            onChange={handleFormChange}
                             className="bg-background border-dark-grey text-white"
                             required
                           />
@@ -586,6 +629,9 @@ export default function HomePage() {
                           <Input 
                             type="number"
                             placeholder="ex: 150"
+                            name="audience"
+                            value={formData.audience}
+                            onChange={handleFormChange}
                             className="bg-background border-dark-grey text-white"
                             required
                           />
@@ -597,7 +643,7 @@ export default function HomePage() {
                           <label className="block text-sm font-medium text-gray-300 mb-2">
                             Budget approximatif (CHF)
                           </label>
-                          <Select>
+                          <Select value={formData.budget} onValueChange={(value) => handleSelectChange('budget', value)}>
                             <SelectTrigger className="bg-background border-dark-grey text-white">
                               <SelectValue placeholder="Sélectionnez..." />
                             </SelectTrigger>
@@ -616,6 +662,9 @@ export default function HomePage() {
                           <Input 
                             type="tel"
                             placeholder="+41 XX XXX XX XX"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleFormChange}
                             className="bg-background border-dark-grey text-white"
                             required
                           />
@@ -629,6 +678,9 @@ export default function HomePage() {
                         <Input 
                           type="email"
                           placeholder="votre@email.com"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleFormChange}
                           className="bg-background border-dark-grey text-white"
                           required
                         />
@@ -640,6 +692,9 @@ export default function HomePage() {
                         </label>
                         <Textarea 
                           placeholder="Décrivez vos besoins spécifiques..."
+                          name="message"
+                          value={formData.message}
+                          onChange={handleFormChange}
                           className="bg-background border-dark-grey text-white min-h-[100px]"
                         />
                       </div>
