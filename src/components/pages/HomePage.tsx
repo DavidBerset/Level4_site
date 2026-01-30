@@ -735,9 +735,7 @@ export default function HomePage() {
             <p className="text-gray-400 mb-4">
               Votre partenaire technique pour vos projets événementiels
             </p>
-            <p className="text-sm text-gray-500">
-              © 2024 LEVEL4. Tous droits réservés.
-            </p>
+            <p className="text-sm text-gray-500">© 2026 LEVEL4. Tous droits réservés.</p>
           </div>
         </div>
       </footer>
