@@ -47,11 +47,11 @@ export default function HomePage() {
           return jaugeB - jaugeA;
         });
         setRealisations(sortedRealisations);
-        // Sort materiel by manual sort field if available, otherwise keep original order
+        // Sort materiel by ordre field
         const sortedMateriel = materielData.items.sort((a, b) => {
-          const sortA = (a as any)._manualSort_03e6fed4_6845_436a_9376_695c9b6acbfb || '';
-          const sortB = (b as any)._manualSort_03e6fed4_6845_436a_9376_695c9b6acbfb || '';
-          return sortA.localeCompare(sortB);
+          const ordreA = a.ordre || 0;
+          const ordreB = b.ordre || 0;
+          return ordreA - ordreB;
         });
         setMateriel(sortedMateriel);
       } catch (error) {

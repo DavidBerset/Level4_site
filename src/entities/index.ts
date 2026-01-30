@@ -44,6 +44,8 @@ export interface Matriellalocation {
   equipmentImage?: string;
   /** @wixFieldType number */
   pricePerDay?: number;
+  /** @wixFieldType number */
+  ordre?: number;
 }
 
 
