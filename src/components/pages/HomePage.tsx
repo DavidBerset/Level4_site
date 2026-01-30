@@ -416,7 +416,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {materiel.map((equipment, index) => (
+            {materiel.filter(equipment => equipment.category?.toLowerCase() !== 'éclairage' && equipment.category?.toLowerCase() !== 'lighting').map((equipment, index) => (
               <motion.div
                 key={equipment._id}
                 initial={{ opacity: 0, y: 30 }}
@@ -458,6 +458,27 @@ export default function HomePage() {
               </motion.div>
             ))}
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="mt-16 bg-background/50 border border-dark-grey rounded-lg p-8 text-center"
+          >
+            <h3 className="text-2xl font-heading font-semibold text-white mb-4">
+              Éclairage
+            </h3>
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+              Pour les solutions d'éclairage, nous collaborons avec d'autres entreprises spécialisées afin de vous proposer les meilleures technologies et services adaptés à vos besoins.
+            </p>
+            <Button 
+              onClick={() => scrollToSection('contact')}
+              className="mt-6 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-8 py-3 rounded-lg"
+            >
+              Nous contacter pour l'éclairage
+            </Button>
+          </motion.div>
         </div>
       </section>
       {/* À propos Section */}

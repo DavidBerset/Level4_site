@@ -40,7 +40,7 @@ export interface Matriellalocation {
   category?: string;
   /** @wixFieldType text */
   description?: string;
-  /** @wixFieldType image */
+  /** @wixFieldType image - Contains image URL, render with <Image> component, NOT as text */
   equipmentImage?: string;
   /** @wixFieldType number */
   pricePerDay?: number;
@@ -78,7 +78,7 @@ export interface Ralisations {
   _updatedDate?: Date;
   /** @wixFieldType text */
   eventName?: string;
-  /** @wixFieldType image */
+  /** @wixFieldType image - Contains image URL, render with <Image> component, NOT as text */
   eventPhoto?: string;
   /** @wixFieldType text */
   location?: string;
@@ -99,7 +99,7 @@ export interface Services {
   _updatedDate?: Date;
   /** @wixFieldType text */
   serviceName?: string;
-  /** @wixFieldType image */
+  /** @wixFieldType image - Contains image URL, render with <Image> component, NOT as text */
   icon?: string;
   /** @wixFieldType text */
   description?: string;
