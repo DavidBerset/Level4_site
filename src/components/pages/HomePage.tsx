@@ -47,7 +47,13 @@ export default function HomePage() {
           return jaugeB - jaugeA;
         });
         setRealisations(sortedRealisations);
-        setMateriel(materielData.items);
+        // Sort materiel by manual sort field if available, otherwise keep original order
+        const sortedMateriel = materielData.items.sort((a, b) => {
+          const sortA = (a as any)._manualSort_24a4c6bd_bc39_4131_8ce3_dd741564997f || '';
+          const sortB = (b as any)._manualSort_24a4c6bd_bc39_4131_8ce3_dd741564997f || '';
+          return sortA.localeCompare(sortB);
+        });
+        setMateriel(sortedMateriel);
       } catch (error) {
         console.error('Error loading data:', error);
       }
@@ -91,7 +97,7 @@ export default function HomePage() {
               <h1 className="text-2xl font-heading font-bold text-primary">{"LEVEL4 Sound & Light"}</h1>
             </div>
 
-            {/* ... keep existing code (Desktop Navigation) ... */}
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               <button onClick={() => scrollToSection('accueil')} className="text-foreground hover:text-primary transition-colors">
                 Accueil
@@ -173,7 +179,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section id="accueil" className="h-screen grid place-items-center relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-dark-grey to-background"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,229,255,0.1),transparent_70%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,229,255,0.1),transparent_70%))]"></div>
         
         <div className="relative z-10 text-center max-w-6xl mx-auto px-4">
           <div className="mb-8">
@@ -478,7 +484,7 @@ export default function HomePage() {
                     N'hésitez pas à nous contacter dès aujourd'hui pour concrétiser votre événement !
                   </p>
                 </div>
-                </div>
+              </div>
             </motion.div>
             
             <motion.div
@@ -676,7 +682,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <p className="text-white font-semibold">Téléphone</p>
-                      <p className="text-gray-400">+41 XX XXX XX XX</p>
+                      <a href="tel:+41775113567" className="text-gray-400 hover:text-primary transition-colors">+41 77 511 35 67</a>
                     </div>
                   </div>
 
@@ -686,7 +692,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <p className="text-white font-semibold">Email</p>
-                      <p className="text-gray-400">contact@level4.ch</p>
+                      <a href="mailto:info@level4.ch" className="text-gray-400 hover:text-primary transition-colors">info@level4.ch</a>
                     </div>
                   </div>
 
