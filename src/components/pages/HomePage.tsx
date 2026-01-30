@@ -441,18 +441,43 @@ export default function HomePage() {
                 À propos de LEVEL4
               </h2>
               <div className="space-y-6 text-lg text-gray-300">
-                <p>
-                  Nous nous engageons à fournir des solutions audiovisuelles de haute qualité, 
-                  adaptées à chaque événement et à chaque budget.
-                </p>
-              <p>
-                  Basée en Romandie, LEVEL4 accompagne vos événements du montage à la diffusion. 
-                  Nous travaillons avec du matériel professionnel RCF, Turbosound et PreSonus.
-                </p>
-                <p>
-                  Notre équipe d'experts techniques intervient pour des mariages, festivals, 
-                  concerts, soirées d'entreprise et fêtes locales dans toute la région.
-                </p>
+                <div>
+                  <h3 className="text-2xl font-heading font-bold text-white mb-4">Avant 2025 (Les Fondations)</h3>
+                  <p className="mb-4">
+                    Nous sommes actif depuis 1983.
+                  </p>
+                  <p className="mb-4">
+                    D'abord nous étions une bande de copains passionnés proposant des soirées DJ.
+                  </p>
+                  <p className="mb-4">
+                    En 1987 nous sonorisions / éclairions notre première manifestions sous cantine, (fête de chant)
+                  </p>
+                  <p>
+                    Depuis nous n'avons cessé d'évoluer dans le monde de l'événementiel et pouvons aujourd'hui vous proposer des solutions conformes à vos attentes ainsi qu'a votre budget.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-heading font-bold text-white mb-4">Après 2025 (La Nouvelle Ère de LEVEL4)</h3>
+                  <p className="mb-4">
+                    Ayant travaillé aux côtés de mon père depuis mon plus jeune âge, j'ai toujours été passionné par la sonorisation et l'univers de la musique.
+                  </p>
+                  <p className="mb-4">
+                    En janvier 2025, j'ai pris la décision de reprendre seul les rênes de LEVEL4. Cette transition a été un moteur pour approfondir mes connaissances et me perfectionner dans l'art d'optimiser la sonorisation d'événements.
+                  </p>
+                  <p className="mb-4">
+                    Ces recherches et cette immersion ont fait naître une véritable passion pour l'excellence technique et la manière de rendre chaque événement inoubliable grâce à une qualité de son et de lumière irréprochable.
+                  </p>
+                  <p className="mb-4">
+                    Je m'engage dans un processus d'amélioration continue, tant pour mes compétences personnelles que pour l'évolution constante de mon parc matériel, afin de garantir des prestations à la pointe de la technologie.
+                  </p>
+                  <p className="mb-4">
+                    Dans cette aventure, je suis fièrement épaulé par mon frère et plusieurs amis fidèles qui, par leur engagement, contribuent au succès et à la réalisation de nos projets.
+                  </p>
+                  <p>
+                    N'hésitez pas à nous contacter dès aujourd'hui pour concrétiser votre événement !
+                  </p>
+                </div>
                 </div>
             </motion.div>
             
