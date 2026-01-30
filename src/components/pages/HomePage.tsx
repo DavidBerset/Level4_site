@@ -49,8 +49,8 @@ export default function HomePage() {
         setRealisations(sortedRealisations);
         // Sort materiel by manual sort field if available, otherwise keep original order
         const sortedMateriel = materielData.items.sort((a, b) => {
-          const sortA = (a as any)._manualSort_24a4c6bd_bc39_4131_8ce3_dd741564997f || '';
-          const sortB = (b as any)._manualSort_24a4c6bd_bc39_4131_8ce3_dd741564997f || '';
+          const sortA = (a as any)._manualSort_03e6fed4_6845_436a_9376_695c9b6acbfb || '';
+          const sortB = (b as any)._manualSort_03e6fed4_6845_436a_9376_695c9b6acbfb || '';
           return sortA.localeCompare(sortB);
         });
         setMateriel(sortedMateriel);
