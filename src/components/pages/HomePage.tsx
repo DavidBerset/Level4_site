@@ -459,22 +459,41 @@ export default function HomePage() {
             ))}
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="mt-16 bg-background/50 border border-dark-grey rounded-lg p-8 text-center"
-          >
-            <h3 className="text-2xl font-heading font-semibold text-white mb-4">Éclairage & Structures</h3>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">Pour les solutions d'éclairage et de structures, nous collaborons avec <span className="text-primary font-semibold">Lumison</span>, notre partenaire spécialisé, afin de vous proposer les meilleures technologies et services adaptés à vos besoins.</p>
-            <Button 
-              onClick={() => scrollToSection('contact')}
-              className="mt-6 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-8 py-3 rounded-lg"
+          <div className="mt-16 space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="bg-background/50 border border-dark-grey rounded-lg p-8 text-center"
             >
-              Nous contacter pour l'éclairage et les structures
-            </Button>
-          </motion.div>
+              <h3 className="text-2xl font-heading font-semibold text-white mb-4">Beaucoup d'autres produits disponibles</h3>
+              <p className="text-lg text-gray-300 max-w-2xl mx-auto">Nous disposons d'une large gamme de matériel professionnel supplémentaire. Contactez-nous pour connaître l'ensemble de nos équipements et trouver la solution parfaite pour votre événement.</p>
+              <Button 
+                onClick={() => scrollToSection('contact')}
+                className="mt-6 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-8 py-3 rounded-lg"
+              >
+                Demander le catalogue complet
+              </Button>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="bg-background/50 border border-dark-grey rounded-lg p-8 text-center"
+            >
+              <h3 className="text-2xl font-heading font-semibold text-white mb-4">Éclairage & Structures</h3>
+              <p className="text-lg text-gray-300 max-w-2xl mx-auto">Pour les solutions d'éclairage et de structures, nous collaborons avec <span className="text-primary font-semibold">Lumison</span>, notre partenaire spécialisé, afin de vous proposer les meilleures technologies et services adaptés à vos besoins.</p>
+              <Button 
+                onClick={() => scrollToSection('contact')}
+                className="mt-6 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-8 py-3 rounded-lg"
+              >
+                Nous contacter pour l'éclairage et les structures
+              </Button>
+            </motion.div>
+          </div>
         </div>
       </section>
       {/* À propos Section */}
