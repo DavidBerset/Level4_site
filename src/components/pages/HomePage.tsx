@@ -86,7 +86,7 @@ export default function HomePage() {
         rating: 0
       });
 
-      // Send email notification to info@level4.ch using Wix Email API
+      // Send email notification to organization email via Wix backend
       const emailBody = `
         <h2>Nouvelle demande de devis</h2>
         <p><strong>Email:</strong> ${formData.email}</p>
@@ -99,12 +99,23 @@ export default function HomePage() {
         <p><strong>Message:</strong> ${formData.message || 'N/A'}</p>
       `;
 
-      // Send email to admin
-      await wixEmailV1.email.send({
-        to: 'info@level4.ch',
-        subject: `Nouvelle demande de devis - ${formData.eventType}`,
-        html: emailBody,
+      // Send email to organization email
+      const adminEmailResponse = await fetch('/_functions/sendEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: 'info@level4.ch',
+          subject: `Nouvelle demande de devis - ${formData.eventType}`,
+          html: emailBody,
+          isAdminEmail: true
+        })
       });
+
+      if (!adminEmailResponse.ok) {
+        console.error('Failed to send admin email');
+      }
 
       // Send confirmation email to user
       const confirmationBody = `
@@ -115,10 +126,17 @@ export default function HomePage() {
         <p>Cordialement,<br/>L'équipe LEVEL4</p>
       `;
 
-      await wixEmailV1.email.send({
-        to: formData.email,
-        subject: 'Confirmation de votre demande de devis - LEVEL4',
-        html: confirmationBody,
+      await fetch('/_functions/sendEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: formData.email,
+          subject: 'Confirmation de votre demande de devis - LEVEL4',
+          html: confirmationBody,
+          isAdminEmail: false
+        })
       });
 
       setFormSubmitted(true);
