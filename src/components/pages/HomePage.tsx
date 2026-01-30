@@ -271,15 +271,9 @@ export default function HomePage() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="text-center">
-                      <CardDescription className="text-gray-400 mb-6">
+                      <CardDescription className="text-gray-400">
                         {service.description}
                       </CardDescription>
-                      <Button 
-                        variant="outline" 
-                        className="border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full"
-                      >
-                        Voir plus
-                      </Button>
                     </CardContent>
                   </Card>
                 </motion.div>
