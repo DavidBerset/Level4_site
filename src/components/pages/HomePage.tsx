@@ -29,6 +29,8 @@ export default function HomePage() {
   const [materiel, setMateriel] = useState<Matriellalocation[]>([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formError, setFormError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     eventType: '',
     date: '',
@@ -74,6 +76,8 @@ export default function HomePage() {
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError('');
+    setIsSubmitting(true);
     
     try {
       // Create a contact in the CMS
@@ -86,58 +90,57 @@ export default function HomePage() {
         rating: 0
       });
 
-      // Send email notification to organization email via Wix backend
-      const emailBody = `
-        <h2>Nouvelle demande de devis</h2>
-        <p><strong>Email:</strong> ${formData.email}</p>
-        <p><strong>Téléphone:</strong> ${formData.phone}</p>
-        <p><strong>Type d'événement:</strong> ${formData.eventType}</p>
-        <p><strong>Date:</strong> ${formData.date}</p>
-        <p><strong>Lieu:</strong> ${formData.location}</p>
-        <p><strong>Jauge:</strong> ${formData.audience} personnes</p>
-        <p><strong>Budget:</strong> ${formData.budget}</p>
-        <p><strong>Message:</strong> ${formData.message || 'N/A'}</p>
-      `;
+      // Send emails using Wix backend
+      try {
+        // Send email to admin
+        const adminEmailResponse = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            to: 'info@level4.ch',
+            subject: `Nouvelle demande de devis - ${formData.eventType}`,
+            type: 'admin',
+            formData: {
+              email: formData.email,
+              phone: formData.phone,
+              eventType: formData.eventType,
+              date: formData.date,
+              location: formData.location,
+              audience: formData.audience,
+              budget: formData.budget,
+              message: formData.message
+            }
+          })
+        });
 
-      // Send email to organization email
-      const adminEmailResponse = await fetch('/_functions/sendEmail', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          to: 'info@level4.ch',
-          subject: `Nouvelle demande de devis - ${formData.eventType}`,
-          html: emailBody,
-          isAdminEmail: true
-        })
-      });
+        if (!adminEmailResponse.ok) {
+          console.error('Failed to send admin email:', adminEmailResponse.statusText);
+        }
 
-      if (!adminEmailResponse.ok) {
-        console.error('Failed to send admin email');
+        // Send confirmation email to user
+        const userEmailResponse = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            to: formData.email,
+            subject: 'Confirmation de votre demande de devis - LEVEL4',
+            type: 'confirmation',
+            userName: formData.email.split('@')[0],
+            eventType: formData.eventType
+          })
+        });
+
+        if (!userEmailResponse.ok) {
+          console.error('Failed to send confirmation email:', userEmailResponse.statusText);
+        }
+      } catch (emailError) {
+        console.error('Error sending emails:', emailError);
+        // Don't fail the form submission if emails fail - the contact was still saved
       }
-
-      // Send confirmation email to user
-      const confirmationBody = `
-        <h2>Merci pour votre demande de devis</h2>
-        <p>Bonjour,</p>
-        <p>Nous avons bien reçu votre demande de devis pour un événement de type <strong>${formData.eventType}</strong>.</p>
-        <p>Notre équipe vous répondra dans la journée.</p>
-        <p>Cordialement,<br/>L'équipe LEVEL4</p>
-      `;
-
-      await fetch('/_functions/sendEmail', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          to: formData.email,
-          subject: 'Confirmation de votre demande de devis - LEVEL4',
-          html: confirmationBody,
-          isAdminEmail: false
-        })
-      });
 
       setFormSubmitted(true);
       setFormData({
@@ -153,19 +156,8 @@ export default function HomePage() {
       setTimeout(() => setFormSubmitted(false), 5000);
     } catch (error) {
       console.error('Error submitting form:', error);
-      // Still show success message as contact was saved
-      setFormSubmitted(true);
-      setFormData({
-        eventType: '',
-        date: '',
-        location: '',
-        audience: '',
-        budget: '',
-        phone: '',
-        email: '',
-        message: ''
-      });
-      setTimeout(() => setFormSubmitted(false), 5000);
+      setFormError('Une erreur est survenue. Veuillez réessayer.');
+      setIsSubmitting(false);
     }
   };
 
@@ -280,7 +272,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section id="accueil" className="h-screen grid place-items-center relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-dark-grey to-background"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,229,255,0.1),transparent_70%))"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,229,255,0.1),transparent_70%))]"></div>
         
         <div className="relative z-10 text-center max-w-6xl mx-auto px-4">
           <div className="mb-8">
@@ -638,6 +630,11 @@ export default function HomePage() {
                     </div>
                   ) : (
                     <form onSubmit={handleFormSubmit} className="space-y-6">
+                      {formError && (
+                        <div className="p-4 bg-destructive/10 border border-destructive rounded-lg">
+                          <p className="text-destructive text-sm">{formError}</p>
+                        </div>
+                      )}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -759,9 +756,10 @@ export default function HomePage() {
 
                       <Button 
                         type="submit"
-                        className="bg-primary text-primary-foreground hover:bg-primary/90 w-full py-3 text-lg font-semibold"
+                        disabled={isSubmitting}
+                        className="bg-primary text-primary-foreground hover:bg-primary/90 w-full py-3 text-lg font-semibold disabled:opacity-50"
                       >
-                        Envoyer la demande
+                        {isSubmitting ? 'Envoi en cours...' : 'Envoyer la demande'}
                       </Button>
                     </form>
                   )}
