@@ -29,6 +29,16 @@ export default function HomePage() {
   const [materiel, setMateriel] = useState<Matriellalocation[]>([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    eventType: '',
+    date: '',
+    location: '',
+    audience: '',
+    budget: '',
+    phone: '',
+    email: '',
+    message: ''
+  });
 
   useEffect(() => {
     const loadData = async () => {
@@ -62,10 +72,73 @@ export default function HomePage() {
     loadData();
   }, []);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    setTimeout(() => setFormSubmitted(false), 5000);
+    
+    try {
+      const response = await fetch('https://api.web.wix.com/v1/contacts/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_WIX_API_KEY}`
+        },
+        body: JSON.stringify({
+          contact: {
+            firstName: formData.email.split('@')[0],
+            emails: {
+              primary: formData.email
+            },
+            phones: {
+              primary: formData.phone
+            },
+            info: {
+              notes: `Type d'événement: ${formData.eventType}\nDate: ${formData.date}\nLieu: ${formData.location}\nJauge: ${formData.audience}\nBudget: ${formData.budget}\nMessage: ${formData.message}`
+            }
+          }
+        })
+      });
+
+      if (response.ok) {
+        // Send email notification to info@level4.ch
+        await fetch('https://api.web.wix.com/v1/mail/send', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_WIX_API_KEY}`
+          },
+          body: JSON.stringify({
+            to: 'info@level4.ch',
+            subject: `Nouvelle demande de devis - ${formData.eventType}`,
+            html: `
+              <h2>Nouvelle demande de devis</h2>
+              <p><strong>Email:</strong> ${formData.email}</p>
+              <p><strong>Téléphone:</strong> ${formData.phone}</p>
+              <p><strong>Type d'événement:</strong> ${formData.eventType}</p>
+              <p><strong>Date:</strong> ${formData.date}</p>
+              <p><strong>Lieu:</strong> ${formData.location}</p>
+              <p><strong>Jauge:</strong> ${formData.audience} personnes</p>
+              <p><strong>Budget:</strong> ${formData.budget}</p>
+              <p><strong>Message:</strong> ${formData.message}</p>
+            `
+          })
+        });
+
+        setFormSubmitted(true);
+        setFormData({
+          eventType: '',
+          date: '',
+          location: '',
+          audience: '',
+          budget: '',
+          phone: '',
+          email: '',
+          message: ''
+        });
+        setTimeout(() => setFormSubmitted(false), 5000);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -542,7 +615,7 @@ export default function HomePage() {
                           <label className="block text-sm font-medium text-gray-300 mb-2">
                             Type d'événement
                           </label>
-                          <Select>
+                          <Select value={formData.eventType} onValueChange={(value) => setFormData({...formData, eventType: value})}>
                             <SelectTrigger className="bg-background border-dark-grey text-white">
                               <SelectValue placeholder="Sélectionnez..." />
                             </SelectTrigger>
@@ -563,6 +636,8 @@ export default function HomePage() {
                           <Input 
                             type="date" 
                             className="bg-background border-dark-grey text-white"
+                            value={formData.date}
+                            onChange={(e) => setFormData({...formData, date: e.target.value})}
                             required
                           />
                         </div>
@@ -576,6 +651,8 @@ export default function HomePage() {
                           <Input 
                             placeholder="Ville, canton"
                             className="bg-background border-dark-grey text-white"
+                            value={formData.location}
+                            onChange={(e) => setFormData({...formData, location: e.target.value})}
                             required
                           />
                         </div>
@@ -587,6 +664,8 @@ export default function HomePage() {
                             type="number"
                             placeholder="ex: 150"
                             className="bg-background border-dark-grey text-white"
+                            value={formData.audience}
+                            onChange={(e) => setFormData({...formData, audience: e.target.value})}
                             required
                           />
                         </div>
@@ -597,7 +676,7 @@ export default function HomePage() {
                           <label className="block text-sm font-medium text-gray-300 mb-2">
                             Budget approximatif (CHF)
                           </label>
-                          <Select>
+                          <Select value={formData.budget} onValueChange={(value) => setFormData({...formData, budget: value})}>
                             <SelectTrigger className="bg-background border-dark-grey text-white">
                               <SelectValue placeholder="Sélectionnez..." />
                             </SelectTrigger>
@@ -617,6 +696,8 @@ export default function HomePage() {
                             type="tel"
                             placeholder="+41 XX XXX XX XX"
                             className="bg-background border-dark-grey text-white"
+                            value={formData.phone}
+                            onChange={(e) => setFormData({...formData, phone: e.target.value})}
                             required
                           />
                         </div>
@@ -630,6 +711,8 @@ export default function HomePage() {
                           type="email"
                           placeholder="votre@email.com"
                           className="bg-background border-dark-grey text-white"
+                          value={formData.email}
+                          onChange={(e) => setFormData({...formData, email: e.target.value})}
                           required
                         />
                       </div>
@@ -641,6 +724,8 @@ export default function HomePage() {
                         <Textarea 
                           placeholder="Décrivez vos besoins spécifiques..."
                           className="bg-background border-dark-grey text-white min-h-[100px]"
+                          value={formData.message}
+                          onChange={(e) => setFormData({...formData, message: e.target.value})}
                         />
                       </div>
 
