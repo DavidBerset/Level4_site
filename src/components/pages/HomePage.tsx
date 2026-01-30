@@ -442,6 +442,10 @@ export default function HomePage() {
               </h2>
               <div className="space-y-6 text-lg text-gray-300">
                 <p>
+                  Nous nous engageons à fournir des solutions audiovisuelles de haute qualité, 
+                  adaptées à chaque événement et à chaque budget.
+                </p>
+              <p>
                   Basée en Romandie, LEVEL4 accompagne vos événements du montage à la diffusion. 
                   Nous travaillons avec du matériel professionnel RCF, Turbosound et PreSonus.
                 </p>
@@ -449,11 +453,7 @@ export default function HomePage() {
                   Notre équipe d'experts techniques intervient pour des mariages, festivals, 
                   concerts, soirées d'entreprise et fêtes locales dans toute la région.
                 </p>
-                <p>
-                  Nous nous engageons à fournir des solutions audiovisuelles de haute qualité, 
-                  adaptées à chaque événement et à chaque budget.
-                </p>
-              </div>
+                </div>
             </motion.div>
             
             <motion.div
