@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { Resend } from 'resend';
 
 interface EmailRequest {
   to: string;
@@ -17,6 +18,10 @@ interface EmailRequest {
   userName?: string;
   eventType?: string;
 }
+
+const resend = new Resend(import.meta.env.RESEND_API_KEY);
+const adminEmail = import.meta.env.ADMIN_EMAIL || 'admin@level4.com';
+const fromEmail = import.meta.env.FROM_EMAIL || 'noreply@level4.com';
 
 export const POST: APIRoute = async ({ request }) => {
   if (request.method !== 'POST') {
@@ -63,19 +68,30 @@ export const POST: APIRoute = async ({ request }) => {
       `;
     }
 
-    // Use Wix email service
-    // For now, we'll use a simple approach - in production, you'd integrate with a proper email service
-    // This is a placeholder that logs the email
-    console.log('Email to send:', {
+    // Send email using Resend
+    const emailResponse = await resend.emails.send({
+      from: fromEmail,
       to: body.to,
       subject: body.subject,
       html: htmlContent
     });
 
+    if (emailResponse.error) {
+      console.error('Resend error:', emailResponse.error);
+      return new Response(JSON.stringify({ 
+        error: 'Failed to send email',
+        details: emailResponse.error.message
+      }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
     // Return success response
     return new Response(JSON.stringify({ 
       success: true, 
-      message: 'Email queued for sending' 
+      message: 'Email sent successfully',
+      id: emailResponse.data?.id
     }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
