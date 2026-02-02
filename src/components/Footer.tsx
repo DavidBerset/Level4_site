@@ -23,14 +23,14 @@ export default function Footer() {
               <Link to="/" className="block font-paragraph text-foreground/80 hover:text-primary transition-colors">
                 Accueil
               </Link>
+              <Link to="/sonorisation" className="block font-paragraph text-foreground/80 hover:text-primary transition-colors">
+                Sonorisation
+              </Link>
+              <Link to="/studio" className="block font-paragraph text-foreground/80 hover:text-primary transition-colors">
+                Studio
+              </Link>
               <Link to="/about" className="block font-paragraph text-foreground/80 hover:text-primary transition-colors">
                 À Propos
-              </Link>
-              <Link to="/services" className="block font-paragraph text-foreground/80 hover:text-primary transition-colors">
-                Services
-              </Link>
-              <Link to="/realisations" className="block font-paragraph text-foreground/80 hover:text-primary transition-colors">
-                Réalisations
               </Link>
             </nav>
           </div>
@@ -64,11 +64,11 @@ export default function Footer() {
             © {currentYear} LEVEL4. Tous droits réservés.
           </p>
           <div className="flex gap-6 mt-4 md:mt-0">
-            <a href="#" className="font-paragraph text-foreground/60 hover:text-primary transition-colors text-sm">
-              Mentions légales
+            <a href="https://www.facebook.com" className="font-paragraph text-foreground/60 hover:text-primary transition-colors text-sm">
+              Facebook
             </a>
-            <a href="#" className="font-paragraph text-foreground/60 hover:text-primary transition-colors text-sm">
-              Politique de confidentialité
+            <a href="https://www.instagram.com" className="font-paragraph text-foreground/60 hover:text-primary transition-colors text-sm">
+              Instagram
             </a>
           </div>
         </div>

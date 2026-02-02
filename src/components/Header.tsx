@@ -17,17 +17,14 @@ export default function Header() {
           <Link to="/" className="font-paragraph text-foreground hover:text-primary transition-colors">
             Accueil
           </Link>
+          <Link to="/sonorisation" className="font-paragraph text-foreground hover:text-primary transition-colors">
+            Sonorisation
+          </Link>
+          <Link to="/studio" className="font-paragraph text-foreground hover:text-primary transition-colors">
+            Studio
+          </Link>
           <Link to="/about" className="font-paragraph text-foreground hover:text-primary transition-colors">
             À Propos
-          </Link>
-          <Link to="/services" className="font-paragraph text-foreground hover:text-primary transition-colors">
-            Services
-          </Link>
-          <Link to="/realisations" className="font-paragraph text-foreground hover:text-primary transition-colors">
-            Réalisations
-          </Link>
-          <Link to="/contact" className="font-paragraph text-foreground hover:text-primary transition-colors">
-            Contact
           </Link>
         </nav>
 
@@ -51,32 +48,25 @@ export default function Header() {
             Accueil
           </Link>
           <Link
+            to="/sonorisation"
+            className="block font-paragraph text-foreground hover:text-primary transition-colors"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Sonorisation
+          </Link>
+          <Link
+            to="/studio"
+            className="block font-paragraph text-foreground hover:text-primary transition-colors"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Studio
+          </Link>
+          <Link
             to="/about"
             className="block font-paragraph text-foreground hover:text-primary transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
             À Propos
-          </Link>
-          <Link
-            to="/services"
-            className="block font-paragraph text-foreground hover:text-primary transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Services
-          </Link>
-          <Link
-            to="/realisations"
-            className="block font-paragraph text-foreground hover:text-primary transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Réalisations
-          </Link>
-          <Link
-            to="/contact"
-            className="block font-paragraph text-foreground hover:text-primary transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Contact
           </Link>
         </nav>
       )}
