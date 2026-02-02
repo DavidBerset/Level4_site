@@ -2,7 +2,9 @@ import { MemberProvider } from '@/integrations';
 import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom';
 import { ScrollToTop } from '@/lib/scroll-to-top';
 import ErrorPage from '@/integrations/errorHandlers/ErrorPage';
-import HomePage from '@/components/pages/HomePage';
+import LandingPage from '@/components/pages/LandingPage';
+import SonorizationPage from '@/components/pages/SonorizationPage';
+import StudioPage from '@/components/pages/StudioPage';
 import AboutPage from '@/components/pages/AboutPage';
 
 // Layout component that includes ScrollToTop
@@ -23,7 +25,15 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: <LandingPage />,
+      },
+      {
+        path: "sonorisation",
+        element: <SonorizationPage />,
+      },
+      {
+        path: "studio",
+        element: <StudioPage />,
       },
       {
         path: "about",
