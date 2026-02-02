@@ -18,8 +18,6 @@ import {
   Phone,
   Mail,
   MapPin,
-  Menu,
-  X,
   ChevronDown
 } from 'lucide-react';
 
@@ -27,7 +25,6 @@ export default function HomePage() {
   const [services, setServices] = useState<Services[]>([]);
   const [realisations, setRealisations] = useState<Ralisations[]>([]);
   const [materiel, setMateriel] = useState<Matriellalocation[]>([]);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     eventType: '',
@@ -110,7 +107,6 @@ export default function HomePage() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-    setIsMenuOpen(false);
   };
 
   const serviceIcons = {
@@ -124,99 +120,11 @@ export default function HomePage() {
   const heroWords = "Votre partenaire technique pour vos projets événementiels".split(" ");
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-paragraph">
-      {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-background/95 backdrop-blur-sm border-b border-dark-grey">
-        <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <div className="flex-shrink-0">
-              <h1 className="text-2xl font-heading font-bold text-primary">{"LEVEL4 Sound & Light"}</h1>
-            </div>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              <button onClick={() => scrollToSection('accueil')} className="text-foreground hover:text-primary transition-colors">
-                Accueil
-              </button>
-              <button onClick={() => scrollToSection('services')} className="text-foreground hover:text-primary transition-colors">
-                Services
-              </button>
-              <button onClick={() => scrollToSection('realisations')} className="text-foreground hover:text-primary transition-colors">
-                Réalisations
-              </button>
-              <button onClick={() => scrollToSection('materiel')} className="text-foreground hover:text-primary transition-colors">
-                Matériel
-              </button>
-              <button onClick={() => scrollToSection('apropos')} className="text-foreground hover:text-primary transition-colors">
-                À propos
-              </button>
-              <button onClick={() => scrollToSection('contact')} className="text-foreground hover:text-primary transition-colors">
-                Contact
-              </button>
-            </nav>
-
-            {/* CTA Button */}
-            <div className="hidden md:block">
-              <Button 
-                onClick={() => scrollToSection('contact')}
-                className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-6 py-2 rounded-lg shadow-lg shadow-primary/20"
-              >
-                Demander un devis
-              </Button>
-            </div>
-
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-md text-foreground hover:text-primary"
-            >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-
-          {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="md:hidden py-4 border-t border-dark-grey"
-            >
-              <div className="flex flex-col space-y-4">
-                <button onClick={() => scrollToSection('accueil')} className="text-left text-foreground hover:text-primary transition-colors">
-                  Accueil
-                </button>
-                <button onClick={() => scrollToSection('services')} className="text-left text-foreground hover:text-primary transition-colors">
-                  Services
-                </button>
-                <button onClick={() => scrollToSection('realisations')} className="text-left text-foreground hover:text-primary transition-colors">
-                  Réalisations
-                </button>
-                <button onClick={() => scrollToSection('materiel')} className="text-left text-foreground hover:text-primary transition-colors">
-                  Matériel
-                </button>
-                <button onClick={() => scrollToSection('apropos')} className="text-left text-foreground hover:text-primary transition-colors">
-                  À propos
-                </button>
-                <button onClick={() => scrollToSection('contact')} className="text-left text-foreground hover:text-primary transition-colors">
-                  Contact
-                </button>
-                <Button 
-                  onClick={() => scrollToSection('contact')}
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold w-full"
-                >
-                  Demander un devis
-                </Button>
-              </div>
-            </motion.div>
-          )}
-        </div>
-      </header>
+    <div className="min-h-screen bg-background text-foreground font-paragraph pt-16">
       {/* Hero Section */}
       <section id="accueil" className="h-screen grid place-items-center relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-dark-grey to-background"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,229,255,0.1),transparent_70%))]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,229,255,0.1),transparent_70%))"></div>
         
         <div className="relative z-10 text-center max-w-6xl mx-auto px-4">
           <div className="mb-8">
@@ -275,6 +183,7 @@ export default function HomePage() {
           <ChevronDown className="w-8 h-8 text-primary animate-bounce" />
         </motion.div>
       </section>
+
       {/* Services Section */}
       <section id="services" className="py-24 bg-dark-grey/50">
         <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -319,6 +228,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
       {/* Réalisations Section */}
       <section id="realisations" className="py-24 bg-dark-grey/50">
         <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -371,6 +281,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
       {/* Matériel Section */}
       <section id="materiel" className="py-24">
         <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -464,6 +375,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
       {/* À propos Section */}
       <section id="apropos" className="py-24 bg-dark-grey/50">
         <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -538,6 +450,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
       {/* Contact Section */}
       <section id="contact" className="py-24 bg-dark-grey/50">
         <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -776,18 +689,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      {/* Footer */}
-      <footer className="bg-background border-t border-dark-grey py-12">
-        <div className="max-w-[120rem] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h3 className="text-2xl font-heading font-bold text-primary mb-4">LEVEL4</h3>
-            <p className="text-gray-400 mb-4">
-              Votre partenaire technique pour vos projets événementiels
-            </p>
-            <p className="text-sm text-gray-500">© 2026 LEVEL4. Tous droits réservés.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
